@@ -73,3 +73,28 @@ const cfn_deleteUser = httpsCallable(functions,'cfn_deleteUser');
 export async function deleteUser(uid){
     await cfn_deleteUser(uid);
 }
+
+//Naga Gopi - Cloud Function - Search Product
+const cfn_searchProductList = httpsCallable(functions, 'cfn_searchProductList');
+export async function searchProduct(productName){
+    const products = []; // array of Product object
+    const result = await cfn_searchProductList(productName);
+    result.data.forEach(element => {
+        const p = new Product(element);
+        p.set_docId(element.docId);
+        products.push(p);
+    });
+    return products;
+}
+//Naga Gopi - Cloud Function - Product Sort Descending
+const cfn_getProductListByPrice = httpsCallable(functions, 'cfn_getProductListByPrice');
+export async function getProductListByPrice(){
+    const products = []; // array of Product object
+    const result = await cfn_getProductListByPrice({});
+    result.data.forEach(element => {
+        const p = new Product(element);
+        p.set_docId(element.docId);
+        products.push(p);
+    });
+    return products;
+}
